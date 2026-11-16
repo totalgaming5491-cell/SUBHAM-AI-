@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SUBHAM AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0b12;--s1:#12141f;--s2:#1a1d2c;--bd:#262a3d;--tx:#eceefb;--mu:#8d93b0;--ac:#8b7bff;--ac2:#4de0ff;--ok:#4ade80;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f6f7fb;--s1:#fff;--s2:#eceefa;--bd:#dfe2f0;--tx:#161829;--mu:#5d6384;color-scheme:light}}
+*{box-sizing:border-box}html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;height:100%;display:flex;flex-direction:column;font:15px/1.5 Inter,"Noto Sans Devanagari",system-ui,sans-serif;background:radial-gradient(520px 260px at 85% -5%,#3a2c9a44,transparent),var(--bg);color:var(--tx)}
+header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.06em}
+.logo i{width:26px;height:26px;border-radius:50%;background:conic-gradient(from 200deg,var(--ac),var(--ac2),var(--ac));box-shadow:0 0 18px #8b7bff88}
+.logo b{background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+button{font:inherit;color:inherit;cursor:pointer}
+.ib{background:none;border:0;font-size:18px;padding:6px 8px;border-radius:10px}
+main{flex:1;min-height:0}
+.v{display:none;height:100%;overflow-y:auto;padding:8px 16px 16px}.v.on{display:block}
+#v-chat.on{display:flex;flex-direction:column;padding:0}
+.modes{display:flex;gap:8px;padding:4px 16px 8px;overflow-x:auto}
+.chip{padding:6px 14px;border:1px solid var(--bd);border-radius:99px;background:var(--s1);color:var(--mu);font-size:13px;white-space:nowrap}
+.chip.on{background:linear-gradient(135deg,var(--ac),#5b8cff);color:#fff;border-color:transparent}
+#msgs{flex:1;overflow-y:auto;padding:8px 16px;display:flex;flex-direction:column;gap:10px}
+.m{max-width:88%;padding:10px 14px;border-radius:18px;white-space:pre-wrap;word-wrap:break-word}
+.m.u{align-self:flex-end;background:linear-gradient(135deg,var(--ac),#5b8cff);color:#fff;border-bottom-right-radius:6px}
+.m.a{align-self:flex-start;background:var(--s2);border:1px solid var(--bd);border-bottom-left-radius:6px}
+.m pre{background:#0008;color:#e6e8ff;padding:10px;border-radius:10px;overflow-x:auto;margin:6px 0;font-size:13px}
+.m code{background:#8b7bff33;padding:1px 5px;border-radius:5px;font-size:13px}
+.hello{margin:auto;text-align:center;color:var(--mu);padding:20px}.hello h2{color:var(--tx);margin:8px 0}
+.comp{display:flex;gap:8px;align-items:flex-end;padding:8px 12px;border-top:1px solid var(--bd)}
+textarea,input[type=text],input[type=datetime-local]{width:100%;background:var(--s1);color:var(--tx);border:1px solid var(--bd);border-radius:14px;padding:10px 14px;font:inherit;outline:none;max-height:120px;resize:none}
+textarea:focus,input:focus{border-color:var(--ac)}
+#mic.rec{background:#ff6b8133;border-radius:50%}
+.go{background:linear-gradient(135deg,var(--ac),#5b8cff);border:0;color:#fff;border-radius:14px;padding:10px 16px;font-weight:600}
+.go:disabled{opacity:.5}
+nav{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--bd);background:var(--s1)}
+nav button{background:none;border:0;padding:8px 0 6px;font-size:11px;color:var(--mu);display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:18px}nav button.on{color:var(--ac)}
+h2{margin:6px 0}.mu{color:var(--mu);margin:0 0 12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:14px}
+.card b{display:block;font-size:26px;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card span{color:var(--mu);font-size:13px}
+.add{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap}.add input[type=text]{flex:1;min-width:140px}
+.row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--s1);border:1px solid var(--bd);border-radius:12px;margin-top:8px}
+.row span{flex:1;word-break:break-word}.row small{display:block;color:var(--mu)}.dn{opacity:.45;text-decoration:line-through}
+.row input[type=checkbox]{width:20px;height:20px;accent-color:var(--ac)}
+.qs{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+#toast{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 12px);transform:translate(-50%,-150%);background:var(--s2);border:1px solid var(--ac);padding:10px 16px;border-radius:14px;transition:transform .3s;z-index:20;max-width:90%}
+#toast.on{transform:translate(-50%,0)}
+.att{padding:6px 16px 0;font-size:13px;color:var(--mu);display:flex;align-items:center;gap:6px}.att[hidden]{display:none}
+.src{display:inline-block;margin-top:8px;font-size:13px;color:var(--ac2);text-decoration:none}
+.vbtn{background:linear-gradient(135deg,var(--ac),#5b8cff);border:0;color:#fff;border-radius:99px;padding:5px 12px;font-size:13px;font-weight:600}
+#vm{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(env(safe-area-inset-bottom,0px) + 16px);background:radial-gradient(500px 400px at 50% 40%,#3a2c9a55,transparent),var(--bg)}#vm[hidden]{display:none}
+.vtop{display:flex;justify-content:space-between;align-items:center}.vtop .ib{font-size:22px}
+.vb{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center}
+.orb{width:150px;height:150px;border-radius:50%;background:conic-gradient(from 200deg,var(--ac),var(--ac2),var(--ac));box-shadow:0 0 50px #8b7bffaa;cursor:pointer}
+.orb.listen{animation:pu 1.2s ease-in-out infinite}.orb.think{animation:sp 1.4s linear infinite;opacity:.75}.orb.speak{animation:pu .7s ease-in-out infinite;box-shadow:0 0 70px #4de0ffcc}
+@keyframes pu{50%{transform:scale(1.14)}}@keyframes sp{to{transform:rotate(360deg)}}
+.vs{color:var(--mu)}.vu{font-size:18px;font-weight:600;max-height:18vh;overflow-y:auto}.va{color:var(--mu);font-size:14px;max-height:26vh;overflow-y:auto}
+#toast{z-index:40}
+</style></head><body>
+<header><div class="logo"><i></i><b>SUBHAM AI</b></div><div><button class="vbtn" id="vb">🎙 Voice</button><button class="ib" id="spk" title="Speak replies">🔇</button><button class="ib" id="clr" title="Clear chat">🗑</button></div></header>
+<main>
+<section class="v on" id="v-chat">
+<div class="modes"><button class="chip on" data-mode="general">✨ Assistant</button><button class="chip" data-mode="study">📚 Study</button><button class="chip" data-mode="code">💻 Coding</button><button class="chip" data-mode="search">🔎 Search</button></div>
+<div id="msgs"></div>
+<div id="att" class="att" hidden></div><div class="comp"><button class="ib" id="clip" title="Attach image or file">📎</button><input type="file" id="file" hidden accept="image/*,.txt,.md,.csv,.json,.js,.py,.html,.css,.java,.c,.cpp,.xml,.log"><textarea id="inp" rows="1" placeholder="Ask anything… कुछ भी पूछें"></textarea><button class="ib" id="mic" title="Voice">🎤</button><button class="go" id="snd">➤</button></div>
+</section>
+<section class="v" id="v-dash"></section>
+<section class="v" id="v-tasks"><h2>Daily tasks</h2><div class="add"><input type="text" id="ti" placeholder="Add a task…"><button class="go" id="ta">Add</button></div><div id="tl"></div></section>
+<section class="v" id="v-rem"><h2>Reminders</h2><div class="add"><input type="text" id="ri" placeholder="Remind me to…"><input type="datetime-local" id="rt"><button class="go" id="ra">Add</button></div><p class="mu">Reminders ring while this page is open.</p><div id="rl"></div></section>
+<section class="v" id="v-mem"><h2>Memory</h2><p class="mu">Things SUBHAM AI knows about you. Tip: say “remember that …” in chat.</p><div class="add"><input type="text" id="mi" placeholder="e.g. I study in class 12, CBSE"><button class="go" id="ma">Save</button></div><div id="ml"></div></section>
+</main>
+<nav>
+<button class="on" data-v="chat"><span>💬</span>Chat</button><button data-v="dash"><span>🏠</span>Home</button><button data-v="tasks"><span>✅</span>Tasks</button><button data-v="rem"><span>⏰</span>Alerts</button><button data-v="mem"><span>🧠</span>Memory</button>
+</nav>
+<div id="vm" hidden><div class="vtop"><button class="chip" id="vl">🌐 Auto</button><button class="ib" id="vc" title="Close">✕</button></div><div class="vb"><div id="vo" class="orb idle"></div><div id="vs" class="vs"></div><div id="vu" class="vu"></div><div id="va" class="va"></div></div></div>
+<div id="toast"></div>
+<script>(function(){
+if(window.claude)return;
+const MODEL="gemini-flash-lite-latest",KEY="subham-gemini-key";
+const getKey=()=>{let k="";try{k=localStorage.getItem(KEY)||""}catch(e){}if(!k){k=(prompt("Paste your free Gemini API key (get one at aistudio.google.com/apikey)")||"").trim();if(k)try{localStorage.setItem(KEY,k)}catch(e){}}return k};
+const b64=b=>new Promise(r=>{const f=new FileReader();f.onload=()=>r(f.result.split(",")[1]);f.readAsDataURL(b)});
+async function ai(input,o={}){const k=getKey();if(!k)throw{code:"not_granted"};
+const contents=await Promise.all(input.map(async(m,i)=>{const p=[{text:m.content}];if(o.images&&i===input.length-1)for(const im of o.images)p.push({inlineData:{mimeType:im.type||"image/jpeg",data:await b64(im)}});return{role:m.role==="assistant"?"model":"user",parts:p}}));
+const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+MODEL+":streamGenerateContent?alt=sse&key="+k,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents,generationConfig:{maxOutputTokens:1024,temperature:0.7}}),signal:o.signal});
+if(!r.ok){const t=await r.text();if(/API key/i.test(t))try{localStorage.removeItem(KEY)}catch(e){}throw{code:r.status===429?"rate_limited":"error",message:t.slice(0,160)}}
+const rd=r.body.getReader(),dc=new TextDecoder();let buf="",text="";
+for(;;){const{done,value}=await rd.read();if(done)break;buf+=dc.decode(value,{stream:true});const ls=buf.split("\n");buf=ls.pop();for(const l of ls){if(l.startsWith("data:")){try{const j=JSON.parse(l.slice(5));const ps=(j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts)||[];ps.forEach(p=>{if(p.text)text+=p.text});o.onText&&o.onText({text})}catch(e){}}}}
+return{text}}
+ai.limits=async()=>({images:true});
+function mkCap(){const P=Capacitor.Plugins.SpeechRecognition;let pf=()=>{},ff=()=>{},sf=()=>{},last="";
+return{onPartial:f=>{pf=f},onFinal:f=>{ff=f},onState:f=>{sf=f},
+async start(o){const p=await P.requestPermissions();if(p.speechRecognition!=="granted")throw{code:"not_granted"};await P.removeAllListeners();last="";
+P.addListener("partialResults",d=>{last=(d.matches||[])[0]||"";pf({text:last})});
+P.addListener("listeningState",d=>{if(d.status==="started")sf({state:"listening"});else{if(last){const t=last;last="";ff({text:t});pf({text:""})}sf({state:"idle",reason:"stopped"})}});
+const l=o&&o.language;await P.start({language:l==="hi"?"hi-IN":l==="en"?"en-IN":(navigator.language||"en-IN"),partialResults:true,popup:false})},
+async stop(){last="";try{await P.stop()}catch(e){}}}}
+const hasSR=window.Capacitor&&Capacitor.Plugins&&Capacitor.Plugins.SpeechRecognition;
+window.claude={use:async n=>n==="sample"?ai:(n==="dictation"&&hasSR?mkCap():null)};
+})();
+</script>
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+let S={tasks:[],rem:[],mem:[],chat:[],mode:"general",speak:false};
+try{const r=localStorage.getItem("subham-ai-v1");if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem("subham-ai-v1",JSON.stringify(S))}catch(e){}};
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmt=t=>esc(t).replace(/```(?:\w+)?\n?([\s\S]*?)```/g,"<pre>$1</pre>").replace(/`([^`\n]+)`/g,"<code>$1</code>").replace(/\*\*([^*\n]+)\*\*/g,"<b>$1</b>");
+let tt;const toast=(t,ms=3000)=>{const e=$("#toast");e.textContent=t;e.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>e.classList.remove("on"),ms)};
+const say=(t,force,cb)=>{if(!S.speak&&!force){cb&&cb();return}try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(t).replace(/[`*#]/g,"").slice(0,1500));u.lang=/[\u0900-\u097F]/.test(t)?"hi-IN":"en-IN";u.onend=u.onerror=()=>{cb&&cb()};speechSynthesis.speak(u)}catch(e){cb&&cb()}};
+const when=t=>new Date(t).toLocaleString([], {dateStyle:"medium",timeStyle:"short"});
+
+/* navigation */
+function nav(v){$$(".v").forEach(e=>e.classList.toggle("on",e.id==="v-"+v));$$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v));if(v==="chat")end();if(v==="dash")rDash()}
+$$("nav button").forEach(b=>b.onclick=()=>nav(b.dataset.v));
+function setMode(m){S.mode=m;save();$$(".chip").forEach(c=>c.classList.toggle("on",c.dataset.mode===m))}
+$$(".chip").forEach(c=>c.onclick=()=>setMode(c.dataset.mode));
+
+/* AI chat */
+const MODES={general:"You are SUBHAM AI, a friendly, capable personal assistant.",study:"You are SUBHAM AI in Study mode: explain simply with examples, then offer one quick practice question.",code:"You are SUBHAM AI in Coding mode: give correct, concise code in fenced blocks with a brief explanation.",search:"You are SUBHAM AI in Search mode. You have no live internet access, so answer from your own knowledge, say clearly when something may be out of date or you are unsure, and suggest what to verify online."};
+const sys=()=>MODES[S.mode]+" Reply in the language the user writes in (English, Hindi or Hinglish). Keep answers concise and easy to read on a phone. Now: "+new Date().toLocaleString()+". Known about the user: "+(S.mem.length?S.mem.join("; "):"nothing yet")+".";
+let sample=null,dict=null,busy=false,base="",imgOK=false,att=null;
+(async()=>{try{sample=await claude.use("sample")}catch(e){}try{imgOK=!!(await sample.limits()).images}catch(e){}try{dict=await claude.use("dictation")}catch(e){}if(!dict&&SR)dict=mkSR();if(!dict)$("#mic").hidden=true;if(dict){dict.onPartial(({text})=>{$("#inp").value=base+text;if(vm)vTick()});dict.onFinal(({text})=>{base+=text+" ";$("#inp").value=base;if(vm)vTick()});dict.onState(({state})=>{$("#mic").classList.toggle("rec",state==="listening");if(vm&&state==="idle"&&vst==="listen"){$("#inp").value.trim()?vDone():setV("idle")}})}})();
+const inp=$("#inp"),msgs=$("#msgs");
+const end=()=>{msgs.scrollTop=msgs.scrollHeight};
+const bub=m=>`<div class="m ${m.role==="user"?"u":"a"}">${m.content?fmt(m.content):"Thinking…"}${m.s&&m.q&&m.content?`<br><a class="src" target="_blank" rel="noopener" href="https://www.google.com/search?q=${encodeURIComponent(m.q)}">🔎 Open live web results ↗</a>`:""}</div>`;
+function rChat(){msgs.innerHTML=S.chat.length?S.chat.map(bub).join(""):`<div class="hello"><div style="font-size:38px">✨</div><h2>नमस्ते! I’m SUBHAM AI</h2><div>Ask in English or हिंदी. I can chat, help you study, write code and remember things.</div><div class="qs" style="justify-content:center"><button class="chip" data-q="Explain photosynthesis simply">Explain photosynthesis</button><button class="chip" data-q="मुझे आज का दिन प्लान करने में मदद करो">आज का प्लान</button><button class="chip" data-q="Write a Python function to check a palindrome">Python palindrome</button></div></div>`;end()}
+function upd(){const l=msgs.lastElementChild;if(l)l.innerHTML=S.chat[S.chat.length-1].content?fmt(S.chat[S.chat.length-1].content):"Thinking…";end()}
+async function send(t){t=(t||inp.value).trim();if(!t&&att)t=att.k==="img"?"Describe this image in detail and point out what matters.":"Summarize this file and point out the key things.";if(!t||busy)return;
+if(!sample){toast("AI isn’t available in this view.");return}
+inp.value="";base="";inp.style.height="auto";
+const rm=t.match(/^(?:please\s+)?remember(?:\s+that)?[\s:,]+(.+)/i);if(rm){S.mem.push(rm[1]);rMem();toast("🧠 Saved to memory")}
+const at=att;att=null;rAtt();S.chat.push({role:"user",content:t+(at?"\n"+(at.k==="img"?"🖼 ":"📄 ")+at.name:""),ctx:at&&at.k==="txt"?"\n\n[Attached file: "+at.name+"]\n"+at.text:""});const a={role:"assistant",content:"",q:t,s:S.mode==="search"};S.chat.push(a);rChat();busy=true;$("#snd").disabled=true;
+let h=S.chat.slice(0,-1).slice(-6);while(h.length&&h[0].role!=="user")h.shift();
+const input=h.map((m,i)=>({role:m.role,content:(i?"":"[Instructions]\n"+sys()+"\n\n[Conversation]\n")+m.content+(m.ctx||"")}));
+try{const o={cache:false,onText:({text})=>{a.content=text;upd()}};if(at&&at.k==="img")o.images=[at.blob];const r=await sample(input,o);if(r&&r.text)a.content=r.text}
+catch(e){if(!a.content)a.content=e&&e.code==="not_granted"?"Permission was declined. Tap send to try again.":e&&e.code==="rate_limited"?"Too many requests. Please wait a moment.":"Sorry, something went wrong"+(e&&e.message?": "+e.message:"")+". Please try again."}
+busy=false;$("#snd").disabled=false;save();rChat();if(vm)vReply(a.content);else say(a.content)}
+$("#snd").onclick=()=>send();
+inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});
+inp.addEventListener("input",()=>{inp.style.height="auto";inp.style.height=Math.min(inp.scrollHeight,120)+"px";if(!$("#mic").classList.contains("rec"))base=inp.value});
+$("#mic").onclick=()=>{if(!dict)return;if($("#mic").classList.contains("rec"))dict.stop();else{base=inp.value?inp.value+" ":"";dict.start().catch(()=>toast("Microphone not available"))}};
+$("#spk").onclick=()=>{S.speak=!S.speak;$("#spk").textContent=S.speak?"🔊":"🔇";if(!S.speak)try{speechSynthesis.cancel()}catch(e){}save();toast(S.speak?"Voice replies on":"Voice replies off")};
+$("#clr").onclick=()=>{S.chat=[];save();rChat()};
+
+/* tasks */
+function rTasks(){$("#tl").innerHTML=S.tasks.length?S.tasks.map((t,i)=>`<div class="row"><input type="checkbox" data-a="tt" data-i="${i}" ${t.d?"checked":""}><span class="${t.d?"dn":""}">${esc(t.x)}</span><button class="ib" data-a="td" data-i="${i}">✕</button></div>`).join(""):`<p class="mu">No tasks yet. Add your first one above.</p>`}
+const addT=()=>{const v=$("#ti").value.trim();if(!v)return;S.tasks.unshift({x:v,d:0});$("#ti").value="";save();rTasks()};
+$("#ta").onclick=addT;$("#ti").onkeydown=e=>{if(e.key==="Enter")addT()};
+
+/* reminders */
+function rRem(){const l=[...S.rem].sort((a,b)=>a.t-b.t);$("#rl").innerHTML=l.length?l.map(r=>`<div class="row"><span class="${r.d?"dn":""}">${r.d?"✓":"⏰"} ${esc(r.x)}<small>${when(r.t)}</small></span><button class="ib" data-a="rd" data-id="${r.id}">✕</button></div>`).join(""):`<p class="mu">No reminders set.</p>`}
+$("#ra").onclick=()=>{const x=$("#ri").value.trim(),t=new Date($("#rt").value).getTime();if(!x||isNaN(t)){toast("Add text and a date & time");return}
+S.rem.push({id:Date.now(),x,t,d:0});try{const L=Capacitor.Plugins.LocalNotifications;L.requestPermissions().then(()=>L.schedule({notifications:[{id:Date.now()%2000000000,title:"SUBHAM AI",body:x,schedule:{at:new Date(t),allowWhileIdle:true}}]}))}catch(e){}$("#ri").value="";$("#rt").value="";save();rRem();toast("⏰ Reminder set");try{Notification.requestPermission()}catch(e){}};
+setInterval(()=>{let c=0;S.rem.forEach(r=>{if(!r.d&&r.t<=Date.now()){r.d=1;c=1;toast("⏰ "+r.x,8000);say("Reminder: "+r.x,true);try{new Notification("SUBHAM AI",{body:r.x})}catch(e){}}});if(c){save();rRem();rDash()}},15000);
+
+/* memory */
+function rMem(){$("#ml").innerHTML=S.mem.length?S.mem.map((m,i)=>`<div class="row"><span>${esc(m)}</span><button class="ib" data-a="md" data-i="${i}">✕</button></div>`).join(""):`<p class="mu">Nothing saved yet.</p>`}
+const addM=()=>{const v=$("#mi").value.trim();if(!v)return;S.mem.push(v);$("#mi").value="";save();rMem()};
+$("#ma").onclick=addM;$("#mi").onkeydown=e=>{if(e.key==="Enter")addM()};
+
+/* dashboard */
+function rDash(){const h=new Date().getHours(),g=h<12?"Good morning":h<17?"Good afternoon":"Good evening",p=S.tasks.filter(t=>!t.d).length,up=S.rem.filter(r=>!r.d).sort((a,b)=>a.t-b.t)[0];
+$("#v-dash").innerHTML=`<h2>नमस्ते Subham 👋</h2><p class="mu">${g} · ${new Date().toLocaleDateString(undefined,{weekday:"long",day:"numeric",month:"long"})}</p>
+<div class="grid"><div class="card"><b>${p}</b><span>Pending tasks</span></div><div class="card"><b>${S.tasks.length-p}</b><span>Completed</span></div><div class="card"><b>${S.rem.filter(r=>!r.d).length}</b><span>Upcoming reminders</span></div><div class="card"><b>${S.mem.length}</b><span>Memories</span></div></div>
+<div class="card"><span>Next reminder</span><div>${up?esc(up.x)+"<small class=mu> · "+when(up.t)+"</small>":"Nothing scheduled"}</div></div>
+<h2 style="margin-top:16px">Quick start</h2><div class="qs"><button class="chip" data-mode="general" data-q="Help me plan my day. Ask what I need to get done.">🗓 Plan my day</button><button class="chip" data-mode="study" data-q="Explain a topic to me step by step. Ask which topic.">📚 Study help</button><button class="chip" data-mode="code" data-q="Help me debug my code. Ask me to paste it.">💻 Code help</button></div>`}
+
+/* shared click handling */
+document.addEventListener("click",e=>{const a=e.target.closest("[data-a]"),q=e.target.closest("[data-q]");
+if(q){if(q.dataset.mode)setMode(q.dataset.mode);nav("chat");send(q.dataset.q);return}
+if(!a)return;const i=+a.dataset.i;
+if(a.dataset.a==="tt"){S.tasks[i].d=S.tasks[i].d?0:1;save();rTasks()}
+if(a.dataset.a==="td"){S.tasks.splice(i,1);save();rTasks()}
+if(a.dataset.a==="md"){S.mem.splice(i,1);save();rMem()}
+if(a.dataset.a==="ax"){att=null;rAtt()}
+if(a.dataset.a==="rd"){S.rem=S.rem.filter(r=>r.id!==+a.dataset.id);save();rRem()}});
+
+/* attachments: images + text documents */
+async function shrink(f){const b=await createImageBitmap(f),s=Math.min(1,1568/Math.max(b.width,b.height)),c=document.createElement("canvas");c.width=Math.round(b.width*s);c.height=Math.round(b.height*s);c.getContext("2d").drawImage(b,0,0,c.width,c.height);return new Promise(r=>c.toBlob(r,"image/jpeg",.85))}
+function rAtt(){const e=$("#att");e.hidden=!att;if(att)e.innerHTML=(att.k==="img"?"🖼 ":"📄 ")+esc(att.name)+' <button class="ib" data-a="ax">✕</button>'}
+$("#clip").onclick=()=>$("#file").click();
+$("#file").onchange=async e=>{const f=e.target.files[0];e.target.value="";if(!f)return;
+if(f.type.startsWith("image/")){if(!imgOK){toast("Image understanding isn’t available in this view");return}try{att={k:"img",name:f.name,blob:await shrink(f)}}catch(x){att={k:"img",name:f.name,blob:f}}}
+else if(f.type==="application/pdf"||/\.pdf$/i.test(f.name)){toast("PDFs aren’t supported yet. Attach a screenshot or paste the text.",4500);return}
+else if(f.size>2e6){toast("File too large (max 2 MB)");return}
+else{try{att={k:"txt",name:f.name,text:(await f.text()).slice(0,12000)}}catch(x){toast("Couldn’t read that file");return}}
+rAtt();toast("Attached. Add a question or just tap send.")};
+/* voice assistant: tap the orb, talk, AI answers out loud */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function mkSR(){let r=null,P=()=>{},F=()=>{},T=()=>{};return{onPartial:f=>{P=f},onFinal:f=>{F=f},onState:f=>{T=f},
+start:o=>new Promise(ok=>{try{r=new SR();r.lang=o&&o.language?(o.language==="hi"?"hi-IN":"en-IN"):(navigator.language||"en-IN");r.interimResults=true;r.continuous=true;r.onstart=()=>T({state:"listening"});r.onend=()=>T({state:"idle",reason:"stopped"});r.onerror=()=>T({state:"idle",reason:"upstream_error"});r.onresult=e=>{let it="";for(let i=e.resultIndex;i<e.results.length;i++){const x=e.results[i];if(x.isFinal)F({text:x[0].transcript});else it+=x[0].transcript}P({text:it})};r.start()}catch(x){}ok()}),
+stop:()=>new Promise(ok=>{try{r.onend=()=>{T({state:"idle",reason:"stopped"});ok()};r.stop()}catch(x){ok()}})}}
+let vm=false,vt=null,vst="idle",vl="";
+const VT={idle:"Tap the orb and speak",listen:"Listening… बोलिए",think:"Thinking…",speak:"Speaking… tap to interrupt"};
+function setV(s){vst=s;$("#vo").className="orb "+s;$("#vs").textContent=VT[s]}
+function vListen(){if(!vm||busy)return;base="";inp.value="";$("#vu").textContent="";setV("listen");dict.start(vl?{language:vl}:undefined).catch(e=>{setV("idle");toast(e&&e.code==="not_granted"?"Microphone permission needed":"Couldn’t start the microphone")})}
+function vTick(){if(vst!=="listen")return;clearTimeout(vt);$("#vu").textContent=inp.value;vt=setTimeout(vDone,1200)}
+async function vDone(){if(vst!=="listen")return;clearTimeout(vt);setV("think");try{await dict.stop()}catch(e){}const t=inp.value.trim();if(!t){setV("idle");return}$("#vu").textContent=t;$("#va").textContent="";send(t)}
+function vReply(t){$("#va").textContent=t.length>500?t.slice(0,500)+"…":t;setV("speak");say(t,true,()=>{if(vst==="speak")setV("idle")})}
+function vOpen(){if(!dict){toast("Voice input isn’t supported in this view. Open the link in Chrome, or use your keyboard’s 🎤.",5000);return}if(!sample){toast("AI isn’t available in this view.");return}vm=true;$("#vm").hidden=false;$("#va").textContent="";vListen()}
+function vClose(){vm=false;clearTimeout(vt);try{dict.stop()}catch(e){}try{speechSynthesis.cancel()}catch(e){}$("#vm").hidden=true}
+$("#vb").onclick=vOpen;$("#vc").onclick=vClose;
+$("#vo").onclick=()=>{if(vst==="speak"){setV("idle");try{speechSynthesis.cancel()}catch(e){}vListen()}else if(vst==="listen")vDone();else if(vst==="idle")vListen()};
+$("#vl").onclick=()=>{vl=vl===""?"hi":vl==="hi"?"en":"";$("#vl").textContent=vl==="hi"?"🌐 हिन्दी":vl==="en"?"🌐 English":"🌐 Auto"};
+$("#spk").textContent=S.speak?"🔊":"🔇";setMode(S.mode);rChat();rTasks();rRem();rMem();rDash();
+</script></body></html>
